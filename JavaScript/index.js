@@ -87,12 +87,25 @@ var finances = [
 ['Feb-2017', 671099]
 ];
 
+//variables for execution
 let executed = false;
 
+//storage variables
 let changesArray = [];
+
+let numberArray = [];
 
 let currentAmount = 0;
 let cachedAmount = 0;
+let loopNumber = 0;
+let totalValue = 0;
+let averageChange = 0;
+
+let highestChange = 0;
+//Checks if function has already been executed
+//Then loops through array, subtracting the previous value from the current.
+//The remainder is then pushed to the changesArray and stored with the corresponding month.
+//loopNumber is iterated to calculate the number of entries
 
 function decipherArray() {
     if(executed != true){
@@ -102,21 +115,57 @@ function decipherArray() {
             finances[i][1] -= currentAmount;
             currentAmount = cachedAmount;
             changesArray.push(finances[i]);
-            console.log(changesArray);
+            loopNumber += 1;
         }
+        createNumArray();
     }
 }
 
+function createNumArray() {
+    for (let i = 0; i < changesArray.length; i++) {
+        numberArray.push(changesArray[i][1]);
+    }
+    determineAverage();
+}
 
+
+//Calculates the overall sum of values contained within changesArray
+//divides this value by the number of entries to produce the average change
+function determineAverage() {
+    for (let i = 0; i < changesArray.length; i++) {
+        totalValue += changesArray[i][1];
+    }
+    averageChange = totalValue / loopNumber;
+    averageChange = averageChange.toFixed(2);
+    determineProfitPeak();
+}
+
+
+
+//Uses math.max to find the highest value entry in the changesArray
 function determineProfitPeak() {
-
+    highestChange = Math.max.apply(Math, numberArray);
+    determineProfitValley();
 }
 
+//Uses math.min to find the lowest value entry in the changesArray
 function determineProfitValley() {
-
+    lowestChange = Math.min.apply(Math, numberArray);
+    outputData();
 }
 
+//Prints Values determined by my Algorithm :)
+function outputData() {
+    console.log('Financial Analysis');
+    console.log('Total Months: ' + loopNumber);
+    console.log('Total: $' + totalValue);
+    console.log('Average Change: $' + averageChange);
+    console.log('Greatest Increase in Profits: $' + highestChange);
+    console.log('Greatest Decrease in Profits: $' + lowestChange);
+}
 
 decipherArray();
 
-//FIND AVERAGE OF ALL NUMBERS 
+
+
+
