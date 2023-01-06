@@ -87,5 +87,36 @@ var finances = [
 ['Feb-2017', 671099]
 ];
 
+let executed = false;
+
+let changesArray = [];
+
+let currentAmount = 0;
+let cachedAmount = 0;
+
+function decipherArray() {
+    if(executed != true){
+        executed = true;
+        for (let i = 0; i < finances.length; i++) {
+            cachedAmount = finances[i][1];
+            finances[i][1] -= currentAmount;
+            currentAmount = cachedAmount;
+            changesArray.push(finances[i]);
+            console.log(changesArray);
+        }
+    }
+}
+
+
+function determineProfitPeak() {
+
+}
+
+function determineProfitValley() {
+
+}
+
+
+decipherArray();
 
 //FIND AVERAGE OF ALL NUMBERS 
